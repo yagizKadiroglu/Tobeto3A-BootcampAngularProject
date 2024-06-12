@@ -1,0 +1,65 @@
+<div class="py-8"></div>
+<div class="my-12">   
+  <h1 class="text-center mb-4 text-4xl font-extrabold text-gray-900 dark:text-dark sm:text-4xl md:text-5xl lg:text-6xl "><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Current</span> Bootcamps</h1>
+</div>
+
+<div class="flex justify-end mx-4 md:mx-10">
+  
+  <div class="lg:w-1/3 sm:mx-0">
+   
+    <div class="w-full mx-4 md:mx-16 max-w-xl text-gray-500 mt-6">
+      <label for="instructorName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-dark">Eğitmen Adı:</label>
+      <input type="text" [(ngModel)]="filterText" id="filterText" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eğitmen adını giriniz." required />
+
+      <div *ngIf="filterText" class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400">
+       Eğitmen <b><i>{{filterText}}</i></b> aradınız.
+      </div>
+    
+
+    <label for="years" class="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-dark">Bir eğitmen seçiniz:</label>
+    <select id="years" size="15" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+      <option (click)="setCurrentBootcamp(bootcamp)" [class]="getCurrentBootcampClass(bootcamp)" routerLink="" 
+      *ngFor="let bootcamp of bootcamps.items| filterPipe:filterText" value="1">{{bootcamp.instructorFirstName+" "+bootcamp.instructorLastName}}</option>  
+    </select>
+  </div>
+</div>
+
+  <div class="lg:w-2/3 mx-5 pl-6 pr-10 md:mx-2">
+    <div class="w-full mx-4 md:mx-16 max-w-7xl text-gray-500">
+
+    <h3 *ngIf="!getBootcamps" class="text-center">Bootcamp Bulunamadı!</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6 2xl:grid-cols-3 mx-auto">
+        <div style="margin-top: 50px;" *ngFor="let bootcamp of bootcamps.items" class="py-5 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <a href="#">
+                <img class="rounded-t-lg" src="" alt="" />
+            </a>
+            <div class="px-9 py-5">
+                <img src="{{bootcamp.imagePath}}" alt="">
+                <a>
+                    <h5 class="mb-2 mt-4 text-xl font-bold tracking-tight text-gray-900 dark:text-white"> {{bootcamp.name}} </h5>
+                </a>
+                <div class="flex mt-4 md:mt-6 ">
+                    <span class="italic inline-flex items-center px-4 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Eğitmen: {{bootcamp.instructorFirstName}} {{bootcamp.instructorLastName}}</span>
+                    <a href="#" class="italic py-2 px-4 ms-2 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Başvuru Yap</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation example" class="flex justify-center mt-10 mb-16">
+        <ul class="inline-flex -space-x-px text-sm">
+          <li>
+            <button (click)="onPreviousPageClicked()" [disabled]="!bootcamps.hasPrevious" type="button" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</button>
+          </li>
+          <li>
+            <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{bootcamps.index+1}}</a>
+          </li>
+          <li>
+            <button type="button" (click)="onViewMoreClicked()" [disabled]="!bootcamps.hasNext" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
